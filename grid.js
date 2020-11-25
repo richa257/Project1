@@ -67,7 +67,7 @@ function abc()
 			}
      	}
 
-     	playcolumn(x,i);
+     	noteget(x,i);
      	 
 
      	 
@@ -80,29 +80,63 @@ function abc()
 
 }
 
-function playcolumn(x,k)
+function noteget(x,k)
 {
+
+	var notes=["A4","B4","C4","D4"];
+	var c_notes=[];
 
 	for(var i=0; i< 4 ; i++)
 	{
-		console.log(x[i]);
+
+		if(x[i]==1)
+		{
+			c_notes.push(notes[i]);
+
+
+
+		}
+
+		
 	}
 
-	if(x[0]==1)
-	{
+	playcolumn(c_notes,k)
 
-		//var m=k
-		//const plucky = new Tone.PluckSynth().toDestination();
-            //plucky.triggerAttack("C4", "+0.5");
+}
+   
 
-       const player = new Tone.Player("https://tonejs.github.io/audio/berklee/gong_1.mp3").toDestination();
-	Tone.loaded().then(() => {
-					player.start();
-		});
-            
+  function playcolumn(c_notes,k)
+  {
 
-	}
+  	var t=k;
+  	var k= t+0.1;
 
+			const synth = new Tone.Synth().toDestination();
+            const seq = new Tone.Sequence((time, note) => {
+
+	     //time=i+1;
+
+
+	     synth.triggerAttackRelease(note, 0.2, time);
+	
+            }, c_notes).start(t).stop(k);
+
+
+         Tone.Transport.start();
+
+
+    
+
+	//console.log(c_notes);
+
+   // var t1=(k+1)*1000
+
+	//setTimeout(()=>{
+	//	Tone.Transport.stop();
+	//},8000)
+
+
+	
 	return;
 
 
@@ -271,10 +305,8 @@ var column = row.selectAll(".square")
 			if ((d.click) % 2 == 1) {
 				d3.select(this).style("fill", "#2C93E8");
 
-				const player = new Tone.Player("https://tonejs.github.io/audio/berklee/gong_1.mp3").toDestination();
-				Tone.loaded().then(() => {
-					player.start();
-				});
+				synth.triggerAttackRelease('B4', '4n');
+
 
 				matrix[r][c] = 2;
 
@@ -298,7 +330,7 @@ var column = row.selectAll(".square")
 				//  synth.triggerAttackRelease('C4', '4n');
 
 				const synth = new Tone.MembraneSynth().toDestination();
-				synth.triggerAttackRelease("C2", "8n");
+				synth.triggerAttackRelease("C4", "8n");
 
 
 				matrix[r][c] = 3;
@@ -321,7 +353,7 @@ var column = row.selectAll(".square")
 			if ((d.click) % 2 == 1) {
 				d3.select(this).style("fill", "#2C93E8");
 
-				synth.triggerAttackRelease('D4', '4n');
+				synth.triggerAttackRelease('D4', '8n');
 
 
 				matrix[r][c] = 4;
@@ -336,3 +368,8 @@ var column = row.selectAll(".square")
 
 
 	});
+
+
+
+
+	
