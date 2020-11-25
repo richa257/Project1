@@ -67,7 +67,7 @@ function abc()
 			}
      	}
 
-     	playcolumn(x);
+     	playcolumn(x,i);
      	 
 
      	 
@@ -80,13 +80,32 @@ function abc()
 
 }
 
-function playcolumn(x)
+function playcolumn(x,k)
 {
 
 	for(var i=0; i< 4 ; i++)
 	{
 		console.log(x[i]);
 	}
+
+	if(x[0]==1)
+	{
+
+		//var m=k
+		//const plucky = new Tone.PluckSynth().toDestination();
+            //plucky.triggerAttack("C4", "+0.5");
+
+       const player = new Tone.Player("https://tonejs.github.io/audio/berklee/gong_1.mp3").toDestination();
+	Tone.loaded().then(() => {
+					player.start();
+		});
+            
+
+	}
+
+	return;
+
+
 
 }
 
@@ -227,6 +246,7 @@ var column = row.selectAll(".square")
 		if (r == 0) {
 			if ((d.click) % 2 == 0) {
 				d3.select(this).style("fill", "#fff");
+					matrix[r][c] = 0;
 			}
 			if ((d.click) % 2 == 1) {
 				d3.select(this).style("fill", "#2C93E8");
@@ -246,6 +266,7 @@ var column = row.selectAll(".square")
 		if (r == 1) {
 			if ((d.click) % 2 == 0) {
 				d3.select(this).style("fill", "#fff");
+				matrix[r][c] = 0;
 			}
 			if ((d.click) % 2 == 1) {
 				d3.select(this).style("fill", "#2C93E8");
@@ -269,6 +290,7 @@ var column = row.selectAll(".square")
 		if (r == 2) {
 			if ((d.click) % 2 == 0) {
 				d3.select(this).style("fill", "#fff");
+				matrix[r][c] = 0;
 			}
 			if ((d.click) % 2 == 1) {
 				d3.select(this).style("fill", "#2C93E8");
@@ -294,6 +316,7 @@ var column = row.selectAll(".square")
 		if (r == 3) {
 			if ((d.click) % 2 == 0) {
 				d3.select(this).style("fill", "#fff");
+				matrix[r][c] = 0;
 			}
 			if ((d.click) % 2 == 1) {
 				d3.select(this).style("fill", "#2C93E8");
