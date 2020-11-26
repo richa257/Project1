@@ -38,40 +38,43 @@ var matrix = [
   }
   */
 
+var countClicks = 0;
+
+
 function abc()
 
 {
+
+	console.log("function called");
+
+	countClicks++;
+
+
+	console.log("click for " + countClicks);
 
 	// column traversal 
 
 	for (var i = 0; i < 16; i++) {
 
-		
-        var x=[0,0,0,0];
+
+		var x = [0, 0, 0, 0];
 
 		for (var j = 0; j < 4; j++) {
 			var n1 = matrix[j][i];
 			var n2 = j + 1;
-			if ( n2 % n1== 0) 
-			{
+			if (n2 % n1 == 0) {
 
-				console.log("selected"+"and value is"+matrix[j][i]);
+				console.log("selected" + "and value is" + matrix[j][i]);
 
-				x[j]=1;
+				x[j] = 1;
 
 
-			}
-			else
-			{
+			} else {
 				console.log("not selected");
 			}
-     	}
+		}
 
-     	noteget(x,i);
-     	 
-
-     	 
-
+		noteget(x, i, countClicks);
 
 
 		//console.log("\n");
@@ -80,65 +83,53 @@ function abc()
 
 }
 
-function noteget(x,k)
-{
+function noteget(x, k, countClicks) {
 
-	var notes=["A4","B4","C4","D4"];
-	var c_notes=[];
+	var notes = ["A4", "B4", "C4", "D4"];
+	var c_notes = [];
 
-	for(var i=0; i< 4 ; i++)
-	{
+	for (var i = 0; i < 4; i++) {
 
-		if(x[i]==1)
-		{
+		if (x[i] == 1) {
 			c_notes.push(notes[i]);
-
 
 
 		}
 
-		
+
 	}
 
-	playcolumn(c_notes,k)
+	playcolumn(c_notes, k, countClicks)
 
 }
-   
-
-  function playcolumn(c_notes,k)
-  {
-
-  	var t=k;
-  	var k= t+0.1;
-
-			const synth = new Tone.Synth().toDestination();
-            const seq = new Tone.Sequence((time, note) => {
-
-	     //time=i+1;
 
 
-	     synth.triggerAttackRelease(note, 0.2, time);
-	
-            }, c_notes).start(t).stop(k);
+function playcolumn(c_notes, k, count) {
+
+	console.log("play column called");
+
+	const now=Tone.now()
+
+	console.log(now)
+
+	var t = now+k;
+	var k = t + 0.1;
+
+	const synth = new Tone.Synth().toDestination();
+	const seq = new Tone.Sequence((time, note) => {
+
+		//time=i+1;
 
 
-         Tone.Transport.start();
+		synth.triggerAttackRelease(note, 0.1, time);
+
+	}, c_notes).start(t).stop(k);
 
 
-    
-
-	//console.log(c_notes);
-
-   // var t1=(k+1)*1000
-
-	//setTimeout(()=>{
-	//	Tone.Transport.stop();
-	//},8000)
+	Tone.Transport.start();
 
 
-	
 	return;
-
 
 
 }
@@ -280,7 +271,7 @@ var column = row.selectAll(".square")
 		if (r == 0) {
 			if ((d.click) % 2 == 0) {
 				d3.select(this).style("fill", "#fff");
-					matrix[r][c] = 0;
+				matrix[r][c] = 0;
 			}
 			if ((d.click) % 2 == 1) {
 				d3.select(this).style("fill", "#2C93E8");
@@ -329,8 +320,10 @@ var column = row.selectAll(".square")
 
 				//  synth.triggerAttackRelease('C4', '4n');
 
-				const synth = new Tone.MembraneSynth().toDestination();
-				synth.triggerAttackRelease("C4", "8n");
+				matrix[r][c] = 3;
+
+
+				synth.triggerAttackRelease("A4", "4n");
 
 
 				matrix[r][c] = 3;
@@ -368,8 +361,3 @@ var column = row.selectAll(".square")
 
 
 	});
-
-
-
-
-	

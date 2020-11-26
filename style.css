@@ -12,7 +12,7 @@ svg#play {
   }
 
 svg#play #triangle {
-  fill:rgba(22,22,22,0);
+  fill:#2C93E8;
   transition:500ms;
   transform-origin: 50% 50%;
 }
